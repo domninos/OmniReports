@@ -1,0 +1,13 @@
+name: OmniReports
+main: net.omni.reports.ReportsPlugin
+version: '1.0-SNAPSHOT'
+api-version: '1,13'
+author: omni
+description: A reports plugin made by omni.
+commands:
+  report:
+    usage: /<command>
+    description: Main command to report a player.
+  reports:
+    usage: /<command>
+    description: Shows reports.

@@ -1,0 +1,15 @@
+use-mysql: false
+mysql:
+  host: localhost
+  port: 3306
+  database: test
+  username: localhost
+  password: root
+reportFormat:
+  - '--------------------------'
+  - 'ID: {id}'
+  - 'Reporter: {reporter}'
+  - 'Reported: {reported}'
+  - 'Reason: {reason}'
+  - '--------------------------'
+countdown-seconds: 15

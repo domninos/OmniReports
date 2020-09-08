@@ -1,0 +1,5 @@
+reports:
+  1:
+    reporter: 'reporter:UUID'
+    reported: 'reported:UUID'
+    reason: 'this guy hax'
