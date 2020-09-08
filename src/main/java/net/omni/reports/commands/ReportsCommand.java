@@ -129,8 +129,6 @@ public class ReportsCommand implements CommandExecutor {
                 sender.spigot().sendMessage(main);
             }
         }
-
-        plugin.sendMessage(sender, "&3[" + pageNumber + "/" + array.length + "]");
     }
 
     /*
@@ -161,7 +159,5 @@ public class ReportsCommand implements CommandExecutor {
                                     report.getReporterPlayer() + " &3reported &9" + report.getReportedPlayer() +
                                     " &3for &9'" + report.getReason() + "'"));
             }
-
-            plugin.sendMessage(sender, "&3[" + page + "/" + array.length + "]");
      */
 }
