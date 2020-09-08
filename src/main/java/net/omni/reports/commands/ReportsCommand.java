@@ -56,7 +56,21 @@ public class ReportsCommand implements CommandExecutor {
                 }
 
                 plugin.sendMessage(sender, "&cUsage: /reports delete <id>");
-            }
+            } else if (args[0].equalsIgnoreCase("switchDB")) {
+                if (!sender.isOp()) {
+                    plugin.sendMessage(sender, "&cInsufficient permissions.");
+                    return true;
+                }
+
+                if (plugin.isSql())
+                    plugin.sendMessage(sender, "&aSwitching from MySQL to flat-file database..");
+                else
+                    plugin.sendMessage(sender, "&aSwitching from flat-file to MySQL database..");
+
+                plugin.getReportsHandler().switchDatabase();
+                plugin.sendMessage(sender, "&aSuccessfully switched databases.");
+            } else
+                plugin.sendMessage(sender, "&cUsage: /reports <page> | /reports delete <id>");
 
             return true;
         } else if (args.length == 2) {
@@ -65,18 +79,21 @@ public class ReportsCommand implements CommandExecutor {
                     plugin.sendMessage(sender, "&cInsufficient permissions.");
                     return true;
                 }
-            }
 
-            int id;
+                int id;
 
-            try {
-                id = Integer.parseInt(args[1]);
-            } catch (NumberFormatException e) {
-                plugin.sendMessage(sender, "&cInvalid number.");
-                return true;
-            }
+                try {
+                    id = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    plugin.sendMessage(sender, "&cInvalid number.");
+                    return true;
+                }
 
-            plugin.getReportsHandler().deleteReport(id, sender);
+                plugin.getReportsHandler().deleteReport(id, sender);
+            } else
+                plugin.sendMessage(sender, "&cUsage: /reports <page> | /reports delete <id>");
+
+            return true;
         }
 
         return true;

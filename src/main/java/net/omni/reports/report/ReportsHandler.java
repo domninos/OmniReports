@@ -15,22 +15,46 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class ReportsHandler {
+    protected final SQLDatabase sqlDatabase;
+    protected final ConfigDatabase configDatabase;
     private final Set<Report> reports = new HashSet<>();
     private final ReportsPlugin plugin;
-    private final ReportsDatabase reportsDatabase;
+    private ReportsDatabase reportsDatabase;
 
     public ReportsHandler(ReportsPlugin plugin) {
         this.plugin = plugin;
 
+        this.sqlDatabase = new SQLDatabase(plugin);
+        this.configDatabase = new ConfigDatabase(plugin);
+
         if (plugin.isSql())
-            this.reportsDatabase = new SQLDatabase(plugin);
+            setDatabase(sqlDatabase);
         else
-            this.reportsDatabase = new ConfigDatabase(plugin);
+            setDatabase(configDatabase);
 
         plugin.sendConsole("&aUsing " + (plugin.isSql() ? "MySQL" : "flat-file") + " database..");
 
         reportsDatabase.load();
+    }
 
+    public void setDatabase(ReportsDatabase reportsDatabase) {
+        this.reportsDatabase = reportsDatabase;
+    }
+
+    public void switchDatabase() {
+        reportsDatabase.flush();
+
+        if (plugin.isSql()) {
+            setDatabase(configDatabase);
+            plugin.setSql(false);
+        } else {
+            setDatabase(sqlDatabase);
+            plugin.setSql(true);
+        }
+
+        reportsDatabase.load();
+
+        plugin.sendConsole("&aSuccessfully switched databases.");
     }
 
     public void load() {

@@ -14,17 +14,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ConfigDatabase implements ReportsDatabase {
-    private final File file;
     private final ReportsPlugin plugin;
+    private File file;
     private FileConfiguration config;
 
     public ConfigDatabase(ReportsPlugin plugin) {
-        this.file = new File(plugin.getDataFolder(), "database.yml");
         this.plugin = plugin;
     }
 
     @Override
     public void load() {
+        this.file = new File(plugin.getDataFolder(), "database.yml");
+
         if (!(file.exists())) {
             plugin.saveResource("database.yml", false);
             plugin.sendConsole("&aCreated database.yml.");

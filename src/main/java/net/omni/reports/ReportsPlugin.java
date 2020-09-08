@@ -84,6 +84,12 @@ public class ReportsPlugin extends JavaPlugin {
         return countdownSeconds;
     }
 
+    public void setSql(boolean sql) {
+        this.sql = sql;
+        getConfig().set("use-mysql", sql);
+        saveConfig();
+    }
+
     public boolean isSql() {
         return sql;
     }

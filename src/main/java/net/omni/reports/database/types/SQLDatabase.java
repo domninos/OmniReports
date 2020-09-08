@@ -14,13 +14,15 @@ import java.util.Set;
 
 public class SQLDatabase implements ReportsDatabase {
     private final ReportsPlugin plugin;
-
-    private final DatabaseHandler databaseHandler;
     private final String table_name = "reports";
+    private DatabaseHandler databaseHandler;
 
     public SQLDatabase(ReportsPlugin plugin) {
         this.plugin = plugin;
+    }
 
+    @Override
+    public void load() {
         if (!plugin.isSql())
             throw new IllegalArgumentException("You cannot access MySQL database because it is using config database.");
 
@@ -31,10 +33,7 @@ public class SQLDatabase implements ReportsDatabase {
         final String password = plugin.getConfig().getString("mysql.password");
 
         this.databaseHandler = new DatabaseHandler(host, port, database, username, password, plugin);
-    }
 
-    @Override
-    public void load() {
         databaseHandler.open();
 
         databaseHandler.query("CREATE TABLE IF NOT EXISTS `" + table_name + "` ( " +
