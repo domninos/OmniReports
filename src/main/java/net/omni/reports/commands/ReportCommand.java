@@ -35,11 +35,6 @@ public class ReportCommand implements CommandExecutor {
                 return true;
             }
 
-            if (plugin.getReportsHandler().isReported(target.getName(), player.getName())) {
-                plugin.sendMessage(player, "&cYou have already reported this player.");
-                return true;
-            }
-
             if (plugin.getCountdownHandler().hasCooldown(player)) {
                 plugin.sendMessage(player, "&cYou are currently in cooldown! You can report in "
                         + plugin.getCountdownHandler().getCooldown(player) + " seconds.");
